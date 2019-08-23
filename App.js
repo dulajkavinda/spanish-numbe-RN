@@ -1,7 +1,9 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 
-import { Audio } from "expo";
+import { Audio } from "expo-av";
+
+import logo from "./assets/logo.png";
 
 const listBackgroundColors = {
   1: "#EAF0F1",
@@ -13,7 +15,7 @@ const listBackgroundColors = {
   7: "#00CCCD",
   8: "#1287A5",
   9: "#EA7773",
-  10: ""
+  10: "#EA7773"
 };
 
 const soundList = {
@@ -30,10 +32,68 @@ const soundList = {
 };
 
 export default class App extends React.Component {
+  playSound = async Number => {
+    const SoundObject = new Audio.Sound();
+    try {
+      let path = soundList[Number];
+      await SoundObject.loadAsync(path);
+      await SoundObject.playAsync()
+        .then(async playbackStatus => {
+          setTimeout(() => {
+            SoundObject.unloadAsync();
+          }, playbackStatus.playbackDurationMillis);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   render() {
     return (
       <View style={styles.container}>
-        <Text>Spanish Number App</Text>
+        <View styel={styles.gridContainer}>
+          <Image style={styles.logo} source={logo} />
+          <View style={styles.rowContainer}>
+            <TouchableOpacity
+              style={[
+                styles.item,
+                { backgroundColor: listBackgroundColors[1] }
+              ]}
+              onPress={() => {
+                this.playSound("one");
+              }}
+            >
+              <Text style={styles.itemText}>One</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[
+                styles.item,
+                { backgroundColor: listBackgroundColors[1] }
+              ]}
+              onPress={() => {
+                this.playSound("one");
+              }}
+            >
+              <Text style={styles.itemText}>Two</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[
+                styles.item,
+                { backgroundColor: listBackgroundColors[1] }
+              ]}
+              onPress={() => {
+                this.playSound("one");
+              }}
+            >
+              <Text style={styles.itemText}>Three</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     );
   }
@@ -42,8 +102,17 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
+    backgroundColor: "gray"
+  },
+  gridContainer: {
+    flex: 1,
+    margin: 5
+  },
+  logo: {
+    alignSelf: "center",
+    marginTop: 20
+  },
+  rowContainer: {
+    flexDirection: "row"
   }
 });
