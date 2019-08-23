@@ -1,5 +1,12 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  TouchableOpacity,
+  Image
+} from "react-native";
 
 import { Audio } from "expo-av";
 
@@ -15,7 +22,7 @@ const listBackgroundColors = {
   7: "#00CCCD",
   8: "#1287A5",
   9: "#EA7773",
-  10: "#EA7773"
+  10: "#EA9973"
 };
 
 const soundList = {
@@ -38,10 +45,10 @@ export default class App extends React.Component {
       let path = soundList[Number];
       await SoundObject.loadAsync(path);
       await SoundObject.playAsync()
-        .then(async playbackStatus => {
+        .then(PlaybackStatus => {
           setTimeout(() => {
             SoundObject.unloadAsync();
-          }, playbackStatus.playbackDurationMillis);
+          }, PlaybackStatus.playableDurationMillis);
         })
         .catch(error => {
           console.log(error);
@@ -54,8 +61,8 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View styel={styles.gridContainer}>
-          <Image style={styles.logo} source={logo} />
+        <Image style={styles.logo} source={logo} />
+        <ScrollView styel={styles.gridContainer}>
           <View style={styles.rowContainer}>
             <TouchableOpacity
               style={[
@@ -72,28 +79,120 @@ export default class App extends React.Component {
             <TouchableOpacity
               style={[
                 styles.item,
-                { backgroundColor: listBackgroundColors[1] }
+                { backgroundColor: listBackgroundColors[2] }
               ]}
               onPress={() => {
-                this.playSound("one");
+                this.playSound("two");
               }}
             >
               <Text style={styles.itemText}>Two</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.rowContainer}>
+            <TouchableOpacity
+              style={[
+                styles.item,
+                { backgroundColor: listBackgroundColors[3] }
+              ]}
+              onPress={() => {
+                this.playSound("three");
+              }}
+            >
+              <Text style={styles.itemText}>Three</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={[
                 styles.item,
-                { backgroundColor: listBackgroundColors[1] }
+                { backgroundColor: listBackgroundColors[4] }
               ]}
               onPress={() => {
-                this.playSound("one");
+                this.playSound("four");
               }}
             >
-              <Text style={styles.itemText}>Three</Text>
+              <Text style={styles.itemText}>Four</Text>
             </TouchableOpacity>
           </View>
-        </View>
+
+          <View style={styles.rowContainer}>
+            <TouchableOpacity
+              style={[
+                styles.item,
+                { backgroundColor: listBackgroundColors[5] }
+              ]}
+              onPress={() => {
+                this.playSound("five");
+              }}
+            >
+              <Text style={styles.itemText}>Five</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[
+                styles.item,
+                { backgroundColor: listBackgroundColors[6] }
+              ]}
+              onPress={() => {
+                this.playSound("six");
+              }}
+            >
+              <Text style={styles.itemText}>Six</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.rowContainer}>
+            <TouchableOpacity
+              style={[
+                styles.item,
+                { backgroundColor: listBackgroundColors[7] }
+              ]}
+              onPress={() => {
+                this.playSound("seven");
+              }}
+            >
+              <Text style={styles.itemText}>Seven</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[
+                styles.item,
+                { backgroundColor: listBackgroundColors[8] }
+              ]}
+              onPress={() => {
+                this.playSound("eight");
+              }}
+            >
+              <Text style={styles.itemText}>Eight</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.rowContainer}>
+            <TouchableOpacity
+              style={[
+                styles.item,
+                { backgroundColor: listBackgroundColors[9] }
+              ]}
+              onPress={() => {
+                this.playSound("nine");
+              }}
+            >
+              <Text style={styles.itemText}>Nine</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[
+                styles.item,
+                { backgroundColor: listBackgroundColors[10] }
+              ]}
+              onPress={() => {
+                this.playSound("ten");
+              }}
+            >
+              <Text style={styles.itemText}>Ten</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
       </View>
     );
   }
@@ -114,5 +213,15 @@ const styles = StyleSheet.create({
   },
   rowContainer: {
     flexDirection: "row"
+  },
+  item: {
+    flex: 1,
+    height: 110,
+    alignItems: "center",
+    justifyContent: "center",
+    margin: 2
+  },
+  itemText: {
+    fontSize: 20
   }
 });
